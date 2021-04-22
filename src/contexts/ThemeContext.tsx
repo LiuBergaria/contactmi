@@ -10,6 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { ThemeProvider } from 'styled-components';
 
 import THEMES from '../constants/themes';
+import { Theme } from '../interfaces/Theme';
 
 // interfaces
 
@@ -17,13 +18,7 @@ type ThemeOption = 'light' | 'dark';
 
 interface ThemeContextData {
   theme: ThemeOption;
-  colors: {
-    primary: string;
-    background: string;
-    foreground: string;
-    background2: string;
-    foreground2: string;
-  };
+  colors: Theme;
   toggleTheme(): void;
 }
 
@@ -31,9 +26,10 @@ interface ThemeContextData {
 const ThemeContext = createContext<ThemeContextData>({} as ThemeContextData);
 
 const themeKey = '@ContactMi:theme';
+const defaultTheme = 'light';
 
 export const CustomThemeProvider: React.FC = ({ children }) => {
-  const [theme, setTheme] = useState<ThemeOption>('light');
+  const [theme, setTheme] = useState<ThemeOption>(defaultTheme);
 
   /**
    * Loads theme preference from storage
@@ -41,7 +37,7 @@ export const CustomThemeProvider: React.FC = ({ children }) => {
   const loadTheme = useCallback(async () => {
     const loadedTheme = (await AsyncStorage.getItem(themeKey)) as ThemeOption;
 
-    setTheme(loadedTheme || 'light');
+    setTheme(loadedTheme || defaultTheme);
   }, []);
 
   /**

@@ -1,7 +1,9 @@
+import { AvailableThemes } from '../interfaces/Theme';
+
 /**
  * Theme colors
  */
-const THEMES = {
+const THEMES: AvailableThemes = {
   light: {
     primary: '#e0245e',
     background: '#ffffff',
